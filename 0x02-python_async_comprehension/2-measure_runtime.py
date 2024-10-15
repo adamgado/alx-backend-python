@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """coroutine that will execute async_comprehension four times in parallel"""
 import asyncio
 import random
