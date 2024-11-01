@@ -20,6 +20,7 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": {"b": 2}}, ("a", "b"), 2)
     ])
     def test_access_nested_map(self, map, path, correct):
+        """test acces nested map"""
         result = access_nested_map(map, path)
         self.assertEqual(result, correct)
 
@@ -28,6 +29,7 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": 1}, ("a", "b"), 'b')
     ])
     def test_access_nested_map_exception(self, map, path, correct):
+        """test exception"""
         with self.assertRaises(KeyError) as e:
             access_nested_map(map, path)
         self.assertEqual(f"KeyError('{correct}')", repr(e.exception))
@@ -40,6 +42,7 @@ class TestGetJson(unittest.TestCase):
         ("http://holberton.io", {"payload": False})
     ])
     def test_get_json(self, test_url, test_payload):
+        """test get json method"""
         configure = {'return_value.json.return_value': test_payload}
         patcher = patch('requests.get', **configure)
         mock_obj = patcher.start()
@@ -51,9 +54,9 @@ class TestGetJson(unittest.TestCase):
 class TestMemoize(unittest.TestCase):
     """Test Memoize"""
     def test_memoize(self):
-
+       """test memoize"""
         class TestClass:
-
+            """wrapper test"""
             def a_method(self):
                 return 42
 
