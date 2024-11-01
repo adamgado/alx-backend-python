@@ -56,7 +56,6 @@ class TestMemoize(unittest.TestCase):
     def test_memoize(self):
         """test memoize"""
 
-
         class TestClass:
             """wrapper test"""
             def a_method(self):
