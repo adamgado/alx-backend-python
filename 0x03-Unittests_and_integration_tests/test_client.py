@@ -57,3 +57,27 @@ class TestGithubOrgClient(unittest.TestCase):
         """unit-test GithubOrgClient.has_license"""
         result = GithubOrgClient.has_license(repo, license)
         self.assertEqual(result, correct)
+
+
+@parameterized_class(
+    ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
+    TEST_PAYLOAD
+)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """Integeration test for Fixtures
+    """
+    @classmethod
+    def setUpClass(a):
+        """return example payloads found in the fixtures"""
+        config = {"return_value.json.side_effect": [
+            a.org_payload, a.repos_payload,
+            a.org_payload, a.repos_payload
+        ]}
+
+        a.get_patcher = patch('requests.get', **config)
+        a.mock = a.get_patcher.start()
+
+    @classmethod
+    def tearDownClass(a):
+        """stop the patcher"""
+        a.get_patcher.stop()
