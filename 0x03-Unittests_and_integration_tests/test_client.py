@@ -77,6 +77,25 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         a.get_patcher = patch('requests.get', **config)
         a.mock = a.get_patcher.start()
 
+    def test_public_repo(self):
+        """test GithubOrgClient.public_repos"""
+        test = GithubOrgClient('Google')
+
+        self.assertEqual(test.org, self.org_payload)
+        self.assertEqual(test.repos_payload, self.repos_payload)
+        self.assertEqual(test.public_repos(), self.expected_repos)
+        self.assertEqual(test.public_repos("XLICENSE"), [])
+        self.mock.assert_called()
+
+    def test_public_repos_with_license(self):
+        """test the public_repos with the argument license= apache-2.0 """
+        test = GithubOrgClient("google")
+
+        self.assertEqual(test.public_repos(), self.expected_repos)
+        self.assertEqual(test.public_repos("XLICENSE"), [])
+        self.assertEqual(test.public_repos("apache-2.0"), self.apache2_repos)
+        self.mock.assert_called()
+
     @classmethod
     def tearDownClass(a):
         """stop the patcher"""
